@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, MessageSquare, Star, Settings } from "lucide-react";
+import { Home, MessageSquare, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function BottomNav() {
@@ -11,8 +11,7 @@ export function BottomNav() {
   const navItems = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/chat', label: 'Chat', icon: MessageSquare },
-    { href: '/upgrade', label: 'Upgrade', icon: Star },
-    { href: '/profile', label: 'Profile', icon: Settings },
+    { href: '/profile', label: 'Profile', icon: User },
   ];
 
   // Don't show on auth page
@@ -22,7 +21,7 @@ export function BottomNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-10 border-t bg-background/95 backdrop-blur-sm md:hidden">
-      <div className="grid h-16 grid-cols-4 items-center justify-items-center gap-4 px-4">
+      <div className="grid h-16 grid-cols-3 items-center justify-items-center gap-4 px-4">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));

@@ -16,10 +16,10 @@ import {
 import {
   Heart,
   LogOut,
-  MessageSquare,
   Settings,
   User,
-  Star,
+  Bot,
+  Award
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { BottomNav } from '@/components/bottom-nav';
@@ -62,7 +62,7 @@ export default function MainAppLayout({
            CrushAI
         </Link>
         <div className="flex items-center gap-4">
-          <div className="font-semibold text-sm">
+          <div className="font-semibold text-sm hidden md:block">
             Messages Left: {messagesLeft} {isGuest ? '' : '/ day'}
           </div>
           <DropdownMenu>
@@ -85,6 +85,15 @@ export default function MainAppLayout({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+               <DropdownMenuItem onClick={() => router.push('/lovecoach')}>
+                <Award className="mr-2 h-4 w-4" />
+                <span>LoveCoach</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/wingsman')}>
+                <Bot className="mr-2 h-4 w-4" />
+                <span>Wingsman</span>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => router.push('/profile')}>
                 <Settings className="mr-2 h-4 w-4" />

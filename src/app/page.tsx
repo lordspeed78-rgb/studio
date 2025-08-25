@@ -1,47 +1,28 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Heart, CheckCircle, Star } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Heart, MessageCircle, User, Award, Bot, ChevronsRight } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from 'next/image';
 
-const plans = [
+const features = [
     {
-        name: "Guest Pass",
-        price: "Free",
-        features: [
-            "5 messages total",
-            "Access to 'Cute' persona",
-            "Standard response time",
-        ],
-        cta: "Try for Free",
-        href: "/auth",
+        title: "Chat with your AI Crush 💌",
+        description: "Engage in delightful conversations with your personalized AI companion. Available 24/7 to brighten your day.",
+        href: "/chat",
+        icon: <MessageCircle className="w-8 h-8 text-primary" />
     },
     {
-        name: "Starter Pack",
-        price: "$4.99",
-        period: "/month",
-        features: [
-            "100 messages per day",
-            "Access to all 4 personas",
-            "Faster response time",
-            "Priority support",
-        ],
-        cta: "Upgrade Now",
-        href: "/upgrade",
+        title: "Get instant Wingman support 😎",
+        description: "Never run out of things to say. Get witty pickup lines, flirty replies, and conversation starters.",
+        href: "/wingsman",
+        icon: <Bot className="w-8 h-8 text-primary" />
     },
     {
-        name: "Pro Lover",
-        price: "$9.99",
-        period: "/month",
-        features: [
-            "Unlimited messages",
-            "Access to all 4 personas",
-            "Fastest response time",
-            "24/7 priority support",
-            "Early access to new features",
-        ],
-        cta: "Go Pro",
-        href: "/upgrade",
-    },
+        title: "Learn from LoveCoach tips 💡",
+        description: "Boost your dating game with expert advice, tips, and templates for crafting the perfect message.",
+        href: "/lovecoach",
+        icon: <Award className="w-8 h-8 text-primary" />
+    }
 ]
 
 export default function Home() {
@@ -54,39 +35,31 @@ export default function Home() {
         <p className="text-xl md:text-2xl text-foreground/80 font-headline bg-white/50 dark:bg-black/20 backdrop-blur-sm p-3 rounded-xl shadow-md">
           Your AI Crush, Anytime.
         </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8">
-            {plans.map((plan) => (
-                <Card key={plan.name} className="flex flex-col shadow-lg hover:shadow-primary/20 transition-shadow duration-300 text-left">
-                    <CardHeader className="text-center">
-                        <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                        <CardDescription className="text-4xl font-bold text-primary py-4">
-                            {plan.price}
-                            {plan.period && <span className="text-sm font-normal text-muted-foreground">{plan.period}</span>}
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex-grow space-y-4">
-                        <ul className="space-y-3">
-                            {plan.features.map((feature) => (
-                                <li key={feature} className="flex items-center gap-2">
-                                    <CheckCircle className="w-5 h-5 text-green-500" />
-                                    <span>{feature}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </CardContent>
-                    <CardFooter>
-                        <Button asChild className="w-full">
-                            <Link href={plan.href}>
-                                {plan.name === "Pro Lover" && <Star className="mr-2 h-4 w-4" />}
-                                {plan.cta}
-                            </Link>
-                        </Button>
-                    </CardFooter>
-                </Card>
-            ))}
-        </div>
         
+        <div className="pt-8">
+            <h2 className="text-3xl font-bold mb-6">Features of CrushAI</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {features.map((feature) => (
+                    <Card key={feature.title} className="flex flex-col text-left shadow-lg hover:shadow-primary/20 transition-shadow duration-300 transform hover:-translate-y-1">
+                        <CardHeader className="flex-row items-center gap-4">
+                            {feature.icon}
+                            <CardTitle className="text-xl">{feature.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex-grow">
+                            <p className="text-muted-foreground">{feature.description}</p>
+                        </CardContent>
+                        <CardContent>
+                             <Button asChild variant="outline" className="w-full">
+                                <Link href={feature.href}>
+                                    Get Started <ChevronsRight className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+        </div>
+
         <div className="text-center text-muted-foreground text-sm pt-4">
             <p>Note: The free guest pass is limited to a total of 5 messages. Upgrade to continue chatting.</p>
         </div>
