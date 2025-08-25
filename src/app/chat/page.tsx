@@ -28,7 +28,7 @@ export default function ChatPage() {
     const [messages, setMessages] = React.useState<Message[]>(initialMessages);
     const [input, setInput] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
-    const [messagesLeft, setMessagesLeft] = React.useState(5);
+    const [messagesLeft, setMessagesLeft] = React.useState(100);
     const [showUpgradeModal, setShowUpgradeModal] = React.useState(false);
     const { toast } = useToast();
     const scrollViewportRef = React.useRef<HTMLDivElement>(null);
@@ -38,7 +38,8 @@ export default function ChatPage() {
         if (guestMessages !== null) {
             setMessagesLeft(parseInt(guestMessages, 10));
         } else {
-            setMessagesLeft(100);
+            // Logged in user, maybe fetch from a service later
+            setMessagesLeft(100); 
         }
     }, []);
 
@@ -55,7 +56,8 @@ export default function ChatPage() {
         e.preventDefault();
         if (!input.trim() || isLoading) return;
 
-        if (messagesLeft <= 0) {
+        const isGuest = localStorage.getItem('crushai-guest-messages') !== null;
+        if (isGuest && messagesLeft <= 0) {
             setShowUpgradeModal(true);
             return;
         }
@@ -66,7 +68,6 @@ export default function ChatPage() {
         setInput('');
         setIsLoading(true);
 
-        const isGuest = localStorage.getItem('crushai-guest-messages') !== null;
         if (isGuest) {
             const newCount = messagesLeft - 1;
             setMessagesLeft(newCount);
@@ -84,11 +85,14 @@ export default function ChatPage() {
                 title: 'Uh oh! Something went wrong.',
                 description: 'There was a problem getting a response. Please try again.',
             });
+            // Revert message count if AI call fails for guest
             if (isGuest) {
-                const newCount = messagesLeft;
+                const newCount = messagesLeft; // It was already decremented, so this is the "reverted" value
                 setMessagesLeft(newCount);
                 localStorage.setItem('crushai-guest-messages', newCount.toString());
             }
+             // Also remove the user message that failed to send
+            setMessages(prev => prev.slice(0, prev.length -1));
         } finally {
             setIsLoading(false);
         }
