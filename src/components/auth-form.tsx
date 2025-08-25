@@ -20,13 +20,13 @@ export function AuthForm() {
     localStorage.setItem('crushai-persona', 'Cute');
     localStorage.setItem('crushai-theme', 'light');
     document.documentElement.classList.remove('dark');
-    router.push('/chat');
+    router.push('/ai-girlfriend');
   };
 
   const handleAuth = (e: React.FormEvent) => {
     e.preventDefault();
     localStorage.removeItem('crushai-guest-messages');
-    router.push('/chat');
+    router.push('/ai-girlfriend');
   };
 
   return (

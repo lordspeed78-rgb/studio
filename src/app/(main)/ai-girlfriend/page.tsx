@@ -25,7 +25,7 @@ const initialMessages: Message[] = [
     { id: '1', text: "Hey! I'm so excited to chat with you! What's on your mind? 😊", sender: 'ai' },
 ];
 
-export default function ChatPage() {
+export default function AIGirlfriendPage() {
     const [messages, setMessages] = React.useState<Message[]>(initialMessages);
     const [input, setInput] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);

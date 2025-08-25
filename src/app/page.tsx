@@ -6,9 +6,9 @@ import Image from 'next/image';
 
 const features = [
     {
-        title: "Chat with your AI Crush 💌",
+        title: "Chat with your AI Girlfriend 💌",
         description: "Engage in delightful conversations with your personalized AI companion. Available 24/7 to brighten your day.",
-        href: "/chat",
+        href: "/ai-girlfriend",
         icon: <MessageCircle className="w-8 h-8 text-primary" />
     },
     {

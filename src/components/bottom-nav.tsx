@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, MessageSquare, User } from "lucide-react";
+import { Home, MessageSquare, User, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function BottomNav() {
@@ -10,7 +10,7 @@ export function BottomNav() {
 
   const navItems = [
     { href: '/', label: 'Home', icon: Home },
-    { href: '/chat', label: 'Chat', icon: MessageSquare },
+    { href: '/ai-girlfriend', label: 'AI Girlfriend', icon: Heart },
     { href: '/profile', label: 'Profile', icon: User },
   ];
 

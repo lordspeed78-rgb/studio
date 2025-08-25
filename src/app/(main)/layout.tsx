@@ -94,6 +94,10 @@ export default function MainAppLayout({
                 <Bot className="mr-2 h-4 w-4" />
                 <span>Wingsman</span>
               </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/ai-girlfriend')}>
+                <Heart className="mr-2 h-4 w-4" />
+                <span>AI Girlfriend</span>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => router.push('/profile')}>
                 <Settings className="mr-2 h-4 w-4" />
