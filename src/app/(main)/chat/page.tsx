@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { MessageBubble } from '@/components/message-bubble';
 import type { Message } from '@/lib/types';
+import { useRouter } from 'next/navigation';
 
 const initialMessages: Message[] = [
     { id: '1', text: "Hey! I'm so excited to chat with you! What's on your mind? 😊", sender: 'ai' },
@@ -31,6 +32,7 @@ export default function ChatPage() {
     const [messagesLeft, setMessagesLeft] = React.useState(100);
     const [showUpgradeModal, setShowUpgradeModal] = React.useState(false);
     const { toast } = useToast();
+    const router = useRouter();
     const scrollViewportRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
@@ -76,7 +78,7 @@ export default function ChatPage() {
 
         try {
             const persona = (localStorage.getItem('crushai-persona') || 'Cute') as AIPersonaChatInput['persona'];
-            const aiResponse = await aiPersonaChat({ message: currentInput, persona });
+            const aiResponse = await aiPersonachaat({ message: currentInput, persona });
             const newAiMessage: Message = { id: (Date.now() + 1).toString(), text: aiResponse.response, sender: 'ai' };
             setMessages(prev => [...prev, newAiMessage]);
         } catch (error) {
@@ -87,7 +89,7 @@ export default function ChatPage() {
             });
             // Revert message count if AI call fails for guest
             if (isGuest) {
-                const newCount = messagesLeft; // It was already decremented, so this is the "reverted" value
+                const newCount = messagesLeft;
                 setMessagesLeft(newCount);
                 localStorage.setItem('crushai-guest-messages', newCount.toString());
             }
@@ -99,7 +101,7 @@ export default function ChatPage() {
     };
     
     return (
-        <div className="flex flex-col h-[calc(100vh-5rem-2px)] md:h-[calc(100vh-5rem-2px)] lg:h-[calc(100vh-5rem-4px)] xl:h-[calc(100vh-8rem)] bg-card rounded-xl shadow-md">
+        <div className="flex flex-col h-full bg-card rounded-xl shadow-md">
             <ScrollArea className="flex-1" viewportRef={scrollViewportRef}>
                 <div className="p-6 space-y-6">
                     {messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)}
@@ -151,7 +153,7 @@ export default function ChatPage() {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                     <Button variant="outline" onClick={() => setShowUpgradeModal(false)}>Maybe Later</Button>
-                    <AlertDialogAction>Upgrade Now</AlertDialogAction>
+                    <AlertDialogAction onClick={() => router.push('/upgrade')}>Upgrade Now</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
