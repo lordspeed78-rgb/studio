@@ -20,6 +20,8 @@ import { useToast } from '@/hooks/use-toast';
 export default function ProfilePage() {
   const [persona, setPersona] = React.useState("Cute");
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [avatar, setAvatar] = React.useState("https://placehold.co/100x100.png");
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   React.useEffect(() => {
@@ -33,6 +35,11 @@ export default function ProfilePage() {
     } else {
       document.documentElement.classList.remove('dark');
       setIsDarkMode(false);
+    }
+
+    const savedAvatar = localStorage.getItem('crushai-avatar');
+    if (savedAvatar) {
+        setAvatar(savedAvatar);
     }
   }, []);
 
@@ -59,6 +66,23 @@ export default function ProfilePage() {
     });
   };
 
+  const handleAvatarUpload = () => {
+    fileInputRef.current?.click();
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64String = reader.result as string;
+            setAvatar(base64String);
+            localStorage.setItem('crushai-avatar', base64String);
+        };
+        reader.readAsDataURL(file);
+    }
+  }
+
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold">Profile Settings</h1>
@@ -71,10 +95,11 @@ export default function ProfilePage() {
         </CardHeader>
         <CardContent className="flex items-center gap-6">
           <Avatar className="h-20 w-20">
-            <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="user avatar" />
+            <AvatarImage src={avatar} data-ai-hint="user avatar" />
             <AvatarFallback><User /></AvatarFallback>
           </Avatar>
-          <Button variant="outline"><Upload className="mr-2 h-4 w-4"/> Upload New Avatar</Button>
+          <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
+          <Button variant="outline" onClick={handleAvatarUpload}><Upload className="mr-2 h-4 w-4"/> Upload New Avatar</Button>
         </CardContent>
       </Card>
 

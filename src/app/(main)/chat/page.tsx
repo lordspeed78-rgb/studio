@@ -78,7 +78,7 @@ export default function ChatPage() {
 
         try {
             const persona = (localStorage.getItem('crushai-persona') || 'Cute') as AIPersonaChatInput['persona'];
-            const aiResponse = await aiPersonachaat({ message: currentInput, persona });
+            const aiResponse = await aiPersonaChat({ message: currentInput, persona });
             const newAiMessage: Message = { id: (Date.now() + 1).toString(), text: aiResponse.response, sender: 'ai' };
             setMessages(prev => [...prev, newAiMessage]);
         } catch (error) {

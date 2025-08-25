@@ -8,30 +8,14 @@ import { ArrowLeft, Bot, Sparkles, Wand2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-// This would be a real AI call in a real app
-const getAIResponse = async (style: string, context: string): Promise<string> => {
-    await new Promise(resolve => setTimeout(resolve, 800)); // Simulate AI thinking
-    
-    if (style === 'pickup-line') {
-        return "Are you a keyboard? Because you're just my type.";
-    }
-    if (style === 'flirty-reply') {
-        if(context.toLowerCase().includes('doing')) {
-            return "Just thinking about my next witty reply to a certain someone... How about you? 😉";
-        }
-        return "Is it hot in here or is it just our conversation? 🔥";
-    }
-    if (style === 'conversation-starter') {
-        return "What's the most spontaneous thing you've ever done?";
-    }
-    return "I'm not sure what to say, but I'm sure you'll figure it out!";
-}
+import { wingsman, WingsmanInput } from '@/ai/flows/wingsman-flow';
+import { useToast } from '@/hooks/use-toast';
 
 
 export default function WingsmanPage() {
     const router = useRouter();
-    const [style, setStyle] = React.useState("pickup-line");
+    const { toast } = useToast();
+    const [style, setStyle] = React.useState<WingsmanInput['style']>("pickup-line");
     const [context, setContext] = React.useState("");
     const [suggestion, setSuggestion] = React.useState("");
     const [isLoading, setIsLoading] = React.useState(false);
@@ -39,9 +23,18 @@ export default function WingsmanPage() {
     const handleGenerate = async () => {
         setIsLoading(true);
         setSuggestion("");
-        const response = await getAIResponse(style, context);
-        setSuggestion(response);
-        setIsLoading(false);
+        try {
+            const response = await wingsman({ style, context });
+            setSuggestion(response.suggestion);
+        } catch (error) {
+            toast({
+                variant: 'destructive',
+                title: 'Uh oh! Something went wrong.',
+                description: 'There was a problem getting a suggestion. Please try again.',
+            });
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -67,7 +60,7 @@ export default function WingsmanPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                              <label htmlFor="style-select" className="font-medium text-sm">What kind of message do you want?</label>
-                            <Select value={style} onValueChange={setStyle}>
+                            <Select value={style} onValueChange={(value) => setStyle(value as WingsmanInput['style'])}>
                                 <SelectTrigger id="style-select">
                                     <SelectValue placeholder="Select a style" />
                                 </SelectTrigger>
