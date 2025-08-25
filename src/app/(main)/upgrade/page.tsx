@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Star } from "lucide-react";
+import { ArrowLeft, CheckCircle, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const plans = [
@@ -55,7 +55,10 @@ export default function UpgradePage() {
 
     return (
         <div className="max-w-5xl mx-auto py-8">
-            <div className="text-center mb-12">
+            <div className="relative text-center mb-12">
+                <Button variant="ghost" size="icon" className="absolute left-0 top-1/2 -translate-y-1/2" onClick={() => router.back()}>
+                    <ArrowLeft className="h-6 w-6" />
+                </Button>
                 <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
                     Find a Plan That's Right For You
                 </h1>
