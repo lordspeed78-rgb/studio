@@ -4,12 +4,14 @@
 import * as React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Bot, Sparkles, Wand2 } from "lucide-react";
+import { ArrowLeft, Bot, Sparkles, Wand2, Languages } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { wingsman, WingsmanInput } from '@/ai/flows/wingsman-flow';
 import { useToast } from '@/hooks/use-toast';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 
 export default function WingsmanPage() {
@@ -17,6 +19,7 @@ export default function WingsmanPage() {
     const { toast } = useToast();
     const [style, setStyle] = React.useState<WingsmanInput['style']>("pickup-line");
     const [context, setContext] = React.useState("");
+    const [language, setLanguage] = React.useState<WingsmanInput['language']>('English');
     const [suggestion, setSuggestion] = React.useState("");
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -24,7 +27,7 @@ export default function WingsmanPage() {
         setIsLoading(true);
         setSuggestion("");
         try {
-            const response = await wingsman({ style, context });
+            const response = await wingsman({ style, context, language });
             setSuggestion(response.suggestion);
         } catch (error) {
             toast({
@@ -80,6 +83,23 @@ export default function WingsmanPage() {
                                 onChange={(e) => setContext(e.target.value)}
                             />
                         </div>
+                    </div>
+                    <div className="space-y-2">
+                        <label className="font-medium text-sm flex items-center gap-2"><Languages/>Language</label>
+                        <RadioGroup
+                            value={language}
+                            onValueChange={(value: any) => setLanguage(value)}
+                            className="flex items-center"
+                        >
+                            <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="English" id="lang-en" />
+                            <Label htmlFor="lang-en">English</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="Hinglish" id="lang-hi" />
+                            <Label htmlFor="lang-hi">Hinglish</Label>
+                            </div>
+                        </RadioGroup>
                     </div>
                     
                     <Button onClick={handleGenerate} disabled={isLoading} className="w-full">

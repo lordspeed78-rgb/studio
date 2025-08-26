@@ -5,7 +5,7 @@ import { aiPersonaChat, AIPersonaChatInput } from '@/ai/flows/ai-persona-chat';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Send, Mic, Heart, Bot } from 'lucide-react';
+import { Send, Mic, Heart, Bot, Languages } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -20,6 +20,8 @@ import {
 import { MessageBubble } from '@/components/message-bubble';
 import type { Message } from '@/lib/types';
 import { useRouter } from 'next/navigation';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 const initialMessages: Message[] = [
     { id: '1', text: "Hey! I'm so excited to chat with you! What's on your mind? 😊", sender: 'ai' },
@@ -31,6 +33,7 @@ export default function AIGirlfriendPage() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [messagesLeft, setMessagesLeft] = React.useState(100);
     const [showUpgradeModal, setShowUpgradeModal] = React.useState(false);
+    const [language, setLanguage] = React.useState<AIPersonaChatInput['language']>('English');
     const { toast } = useToast();
     const router = useRouter();
     const scrollViewportRef = React.useRef<HTMLDivElement>(null);
@@ -78,7 +81,7 @@ export default function AIGirlfriendPage() {
 
         try {
             const persona = (localStorage.getItem('crushai-persona') || 'Cute') as AIPersonaChatInput['persona'];
-            const aiResponse = await aiPersonaChat({ message: currentInput, persona });
+            const aiResponse = await aiPersonaChat({ message: currentInput, persona, language });
             const newAiMessage: Message = { id: (Date.now() + 1).toString(), text: aiResponse.response, sender: 'ai' };
             setMessages(prev => [...prev, newAiMessage]);
         } catch (error) {
@@ -121,6 +124,23 @@ export default function AIGirlfriendPage() {
                 </div>
             </ScrollArea>
             <div className="p-4 border-t bg-background/50 rounded-b-xl">
+                 <div className="flex items-center mb-2">
+                    <Languages className="w-5 h-5 mr-2 text-muted-foreground" />
+                    <RadioGroup
+                        value={language}
+                        onValueChange={(value: any) => setLanguage(value)}
+                        className="flex items-center"
+                    >
+                        <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="English" id="lang-en" />
+                        <Label htmlFor="lang-en">English</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Hinglish" id="lang-hi" />
+                        <Label htmlFor="lang-hi">Hinglish</Label>
+                        </div>
+                    </RadioGroup>
+                </div>
                 <form onSubmit={handleSendMessage} className="relative">
                     <Textarea
                         value={input}

@@ -14,6 +14,7 @@ import {z} from 'genkit';
 const WingsmanInputSchema = z.object({
     style: z.enum(['pickup-line', 'flirty-reply', 'conversation-starter']).describe("The style of message to generate."),
     context: z.string().optional().describe("The last message from the other person, for context."),
+    language: z.enum(['English', 'Hinglish']).describe("The language for the AI to generate the message in."),
 });
 export type WingsmanInput = z.infer<typeof WingsmanInputSchema>;
 
@@ -32,6 +33,8 @@ const prompt = ai.definePrompt({
   input: {schema: WingsmanInputSchema},
   output: {schema: WingsmanOutputSchema},
   prompt: `You are Wingsman AI, an expert in crafting witty and charming messages for dating apps. Your task is to generate a message based on the user's request.
+
+Please generate the message in the following language: {{{language}}}.
 
 Request Style: {{{style}}}
 {{#if context}}

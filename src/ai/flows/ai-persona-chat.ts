@@ -16,6 +16,9 @@ const AIPersonaChatInputSchema = z.object({
   persona: z
     .enum(['Cute', 'Flirty', 'Supportive', 'Funny'])
     .describe('The chosen persona for the AI.'),
+  language: z
+    .enum(['English', 'Hinglish'])
+    .describe('The language for the AI to respond in.'),
 });
 export type AIPersonaChatInput = z.infer<typeof AIPersonaChatInputSchema>;
 
@@ -47,6 +50,8 @@ const prompt = ai.definePrompt({
   output: {schema: AIPersonaChatOutputSchema},
   tools: [incorporatePersona],
   prompt: `You are an AI companion designed to chat with users. Your current persona is: {{{persona}}}.
+
+Please respond in the following language: {{{language}}}.
 
 User message: {{{message}}}
 
