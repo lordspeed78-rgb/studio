@@ -20,7 +20,7 @@ import { useToast } from '@/hooks/use-toast';
 export default function ProfilePage() {
   const [persona, setPersona] = React.useState("Cute");
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [avatar, setAvatar] = React.useState("https://placehold.co/100x100.png");
+  const [avatar, setAvatar] = React.useState("https://picsum.photos/100/100");
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 

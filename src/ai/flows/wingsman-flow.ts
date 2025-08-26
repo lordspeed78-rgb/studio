@@ -41,7 +41,7 @@ Request Style: {{{style}}}
 Their last message: {{{context}}}
 {{/if}}
 
-Generate a response in the requested style. If they provided their last message, use it for context to make your reply more relevant.
+Generate a response in the requested style and language. If a context message is provided, use it to make your reply more relevant.
 `,
 });
 

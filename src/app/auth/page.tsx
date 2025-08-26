@@ -8,7 +8,7 @@ export default function AuthPage() {
       <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="hidden md:flex flex-col items-center justify-center text-center space-y-4">
           <Image
-            src="https://placehold.co/400x400.png"
+            src="https://picsum.photos/400/400"
             alt="AI Crush Avatar"
             width={300}
             height={300}

@@ -85,6 +85,7 @@ export default function AIGirlfriendPage() {
             const newAiMessage: Message = { id: (Date.now() + 1).toString(), text: aiResponse.response, sender: 'ai' };
             setMessages(prev => [...prev, newAiMessage]);
         } catch (error) {
+            console.error(error);
             toast({
                 variant: 'destructive',
                 title: 'Uh oh! Something went wrong.',
@@ -111,7 +112,7 @@ export default function AIGirlfriendPage() {
                     {isLoading && (
                         <div className="flex items-end gap-2 justify-start">
                              <Avatar className="h-8 w-8">
-                                <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="cute anime robot" />
+                                <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="cute anime robot" />
                                 <AvatarFallback><Bot/></AvatarFallback>
                             </Avatar>
                             <div className="flex items-center space-x-1 rounded-2xl px-4 py-3 bg-secondary text-secondary-foreground rounded-bl-none shadow-sm">

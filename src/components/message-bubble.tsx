@@ -12,7 +12,7 @@ export function MessageBubble({ message }: { message: Message }) {
         <div className={`flex items-end gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}>
             {!isUser && (
                 <Avatar className="h-8 w-8">
-                    <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="cute anime robot" />
+                    <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="cute anime robot" />
                     <AvatarFallback><Bot/></AvatarFallback>
                 </Avatar>
             )}
@@ -26,7 +26,7 @@ export function MessageBubble({ message }: { message: Message }) {
             </div>
              {isUser && (
                 <Avatar className="h-8 w-8">
-                    <AvatarImage src="https://placehold.co/100x100.png" data-ai-hint="user avatar" />
+                    <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="user avatar" />
                     <AvatarFallback><User/></AvatarFallback>
                 </Avatar>
             )}

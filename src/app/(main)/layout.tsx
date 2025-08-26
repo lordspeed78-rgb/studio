@@ -73,7 +73,7 @@ export default function MainAppLayout({
               >
                 <Avatar className="h-10 w-10">
                   <AvatarImage
-                    src="https://placehold.co/100x100.png"
+                    src="https://picsum.photos/100/100"
                     alt="User Avatar"
                     data-ai-hint="user avatar"
                   />
