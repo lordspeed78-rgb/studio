@@ -19,7 +19,7 @@ const plans = [
     },
     {
         name: "Starter Pack",
-        price: "$4.99",
+        price: "₹199",
         period: "/month",
         features: [
             "100 messages per day",
@@ -31,7 +31,7 @@ const plans = [
     },
     {
         name: "Pro Lover",
-        price: "$9.99",
+        price: "₹399",
         period: "/month",
         features: [
             "Unlimited messages",
@@ -47,10 +47,12 @@ const plans = [
 export default function UpgradePage() {
     const router = useRouter();
 
-    const handleUpgrade = () => {
-        // Here you would integrate with a payment provider like Stripe
-        alert("Redirecting to checkout...");
-        // router.push('/checkout/pro');
+    const handleUpgrade = (planName: string) => {
+        // A real implementation would require a backend to create a payment
+        // request and redirect to the PhonePe payment gateway.
+        // For now, we'll simulate this with an alert.
+        alert(`Redirecting to PhonePe to purchase the ${planName} plan...`);
+        // Example: router.push('/api/payment/phonepe?plan=' + planName);
     }
 
     return (
@@ -88,7 +90,7 @@ export default function UpgradePage() {
                             </ul>
                         </CardContent>
                         <CardFooter>
-                            <Button className="w-full" onClick={handleUpgrade} disabled={plan.disabled}>
+                            <Button className="w-full" onClick={() => handleUpgrade(plan.name)} disabled={plan.disabled}>
                                 {plan.name === "Pro Lover" && <Star className="mr-2 h-4 w-4" />}
                                 {plan.cta}
                             </Button>
