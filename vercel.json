@@ -1,0 +1,9 @@
+{
+  "build": {
+    "env": {
+      "GEMINI_API_KEY": "@gemini-api-key",
+      "PHONEPE_MERCHANT_ID": "@phonepe-merchant-id",
+      "PHONEPE_SALT_KEY": "@phonepe-salt-key"
+    }
+  }
+}
